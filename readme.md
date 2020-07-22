@@ -64,3 +64,28 @@ These endpoints are also available as a [Postman](https://www.postman.com/) coll
 - [Nuruzzaman Milon](https://milon.im)
 
 Feel free to email me, if you have any question.
+
+
+### Docker
+#### build image
+```
+cd Docker/nginx && docker build -t laravel-nginx:v1 .
+cd Docker/php && docker build -t laravel-php:v1 .
+```
+#### start 
+edit .env 
+```
+cp .env.example .env 
+```
+```
+docker-compose up -d
+``` 
+#### init laravel-env
+```
+sudo docker-compose exec php composer install
+sudo docker-compose exec php php artisan key:generate
+sudo docker-compose exec php php artisan migrate
+sudo docker-compose exec php php artisan db:seed
+sudo docker-compose exec php chown -R 99:99 /app
+sudo docker-compose exec nginx chown -R 99:99 /app
+```

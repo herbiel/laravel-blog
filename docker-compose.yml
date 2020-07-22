@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/laravel-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: tangbull123
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: tb
+      MYSQL_PASSWORD: tangbull123
+  redis:
+        image: redis
+        ports:
+          - "6382:6379"
+  php:
+    image: harbor.tangbull.xyz:9443/php/laravel-php:v2
+    working_dir: /app
+    ports:
+      - 9000
+    volumes:
+      - ./:/app
+  nginx:
+    image: harbor.tangbull.xyz:9443/php/laravel-nginx:v1
+    working_dir: /app
+    ports:
+      - 10081:8999
+    volumes:
+      - ./:/app
+volumes:
+    db_data: {}
